@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookMyDoc</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script src="./socket.io.js"></script>
+
+<body>
+    <div class="container">
+        <h3>Book My Doc</h3>
+
+        <form id="bookByDoc">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name">
+            
+            <label for="phoneNo">Phone:</label>
+            <input type="text" id="phoneNo" placeholder="Enter your phone number">
+            
+            <label for="reason">Reason:</label>
+            <select id="reason">
+                <option value="">Select a reason</option>
+                <option value="Chronic_ Conditions">Chronic Conditions</option>
+                <option value="Illness_Infection">Illness or Infection</option>
+                <option value="Vision_and_Hearing">Vision and Hearing</option>
+            </select>
+
+            <label for="note">Summary:</label>
+        <textarea id="note" cols="40" rows="2" placeholder="Enter summary here..."></textarea>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date">
+            
+            <label for="timeSlot">Select a Time Slot:</label>
+
+            <!-- show all slots -->
+            <div id="slotsContainer">
+            </div>
+
+            <!-- show available slots -->
+            <div id="slots-container">
+            </div>
+
+            <br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script>
+        // Get today's date
+        const currentUrl = `http://localhost:3000`;
+        
+        const today = new Date();
+        const formattedToday = today.toISOString().split('T')[0];
+
+        // Calculate the date 10 days from today
+        const tenDaysLater = new Date(today);
+        tenDaysLater.setDate(today.getDate() + 10);
+        const formattedTenDaysLater = tenDaysLater.toISOString().split('T')[0];
+
+        // Set the min and max attributes on the date input
+        const dateInput = document.getElementById('date');
+        dateInput.setAttribute('min', formattedToday);
+        dateInput.setAttribute('max', formattedTenDaysLater);
+
+        const form = document.getElementById('bookByDoc');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const phoneNo = document.getElementById('phoneNo').value;
+            const reason = document.getElementById('reason').value;
+            const note = document.getElementById('note').value;
+            const date = document.getElementById('date').value;
+            const slot = document.querySelector('input[name="timeSlot"]:checked').value;
+
+            console.log(name, phoneNo, reason, note, date, slot);
+            
+            if(name.length == 0 || name.length < 2 || phoneNo.length == 0
+            || reason.length == 0 || note.length == 0 || date.length == 0 
+            || slot.length == 0
+            ){
+                alert('Invalid Input')
+                return false;
+            }
+
+            const data = { name, phoneNo, reason, note, date, slot };
+
+            fetch(`${currentUrl}/api/v1/book`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        })
+        // #  --------------------------------------------------------------------------------------  
+
+// With the help of socket.io we update real time booked slot.
+
+        // Connect to the server
+        const socket = io();
+        console.log(socket);
+
+        // Listen for the 'message' event from the server
+        socket.on('message', (data) => {
+            console.log('Message from server:', data);
+        });
+
+        // Update current booking slots
+        socket.on('update', (data) => {
+
+            const { results, bookingDate, slotId } = data;            
+            const container = document.getElementById('slots-container');
+            const bookingDateObj = new Date(bookingDate);
+            const formattedDate = bookingDateObj.toISOString().slice(0, 10);
+
+            if (slotId && formattedDate) {
+                const correntSelectedDate = document.getElementById('date').value.trim(" ");
+
+                // Only update current user selected slot with slotId
+                if (formattedDate == correntSelectedDate) {
+                    const slotElment = document.getElementById(slotId);
+                    slotElment.classList.remove('available');
+                    slotElment.classList.add('booked');
+
+                    let textVal = slotElment.children[0].children[1].innerHTML;
+                    textVal = textVal.split('-');
+                    textVal = textVal.map(time => time.trim());
+
+                    slotElment.innerHTML = `Booked (Start: ${textVal[0]}, End: ${textVal[1]})`;
+                }
+            }
+        });
+
+        // Emit a message to the server
+        socket.emit('message', 'Hello from client!');
+        // #  --------------------------------------------------------------------------------------
+
+        // on dom load fetch avilable slots
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch(`${currentUrl}/api/v1/slots`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    console.log('display', data.data);
+
+                    const slotsContainer = document.getElementById('slotsContainer');
+                    data.data._slots.forEach(slot => {
+                        const slotDiv = document.createElement('div');
+                        slotDiv.classList.add('slot');
+                        // Define the radio button with formatted start and end time
+                        const options = {
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            hour12: true,
+                            timeZone: 'UTC'    // Specify that the time is in UTC
+                        }
+
+                        // Format the start and end times with AM/PM
+                        const formattedStartTime = new Date(slot.startTime).toLocaleTimeString('en-IN', options);
+                        const formattedEndTime = new Date(slot.endTime).toLocaleTimeString('en-IN', options);
+                                            
+                        // Define the radio button with formatted start and end time including AM/PM
+                        slotDiv.innerHTML = `
+                        <label>
+                            <input type="radio" name="timeSlot" value="${slot.startTime}_${slot.endTime}" required>
+                            <span>${formattedStartTime} - ${formattedEndTime}</span>
+                        </label>
+                    `;
+                        slotsContainer.appendChild(slotDiv);
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        })
+        // #  --------------------------------------------------------------------------------------
+        //on date change fetch avilable slots
+        document.getElementById('date').addEventListener('change', () => {
+            const slotsContainer = document.getElementById('slotsContainer');
+            slotsContainer.hidden = true;
+
+            const date = document.getElementById('date').value;
+            fetch(`${currentUrl}/api/v1/slots/${date}`)
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('slots-container');
+                    console.log('display', data.data);
+                    let slots = data.data.results;
+
+                    // Clear the container to remove old slots
+                    container.innerHTML = '';
+
+                    slots.forEach(slot => {
+                        const slotDiv = document.createElement('div');
+                        slotDiv.className = 'slot'; // Base class for all slots
+
+                        const options = {
+                            hour: 'numeric',  // Removes leading zero
+                            minute: 'numeric',
+                            hour12: true,                            
+                            timeZone: 'UTC'    // Specify that the time is in UTC
+                        };
+
+                        // Format the start and end times with AM/PM
+                        const formattedStartTime = new Date(slot.startTime).toLocaleTimeString('en-IN', options);
+                        const formattedEndTime = new Date(slot.endTime).toLocaleTimeString('en-IN', options);
+
+    //                     const formattedStartTime = new Date(slot.startTime).toLocaleTimeString('en-IN', options);
+    // const formattedEndTime = new Date(slot.endTime).toLocaleTimeString('en-IN', options);
+    // console.log(`${formattedStartTime} - ${formattedEndTime}`);
+
+                        // Set class based on booked status
+                        if (slot.booked === 1) {
+                            slotDiv.id = `${slot._id}`;
+                            slotDiv.classList.add('booked');
+                            slotDiv.innerText = `Booked (Start: ${formattedStartTime}, End: ${formattedEndTime})`;
+                        } else {
+                            slotDiv.id = `${slot._id}`;
+                            slotDiv.classList.add('available');
+                            slotDiv.innerHTML = `
+                            <label>
+                                <input type="radio" name="timeSlot" value="${slot.startTime}_${slot.endTime}" required>
+                            <span> ${formattedStartTime} - ${formattedEndTime} </span>
+                            </label>
+                        `;
+                            // slotDiv.innerText = `Available (Start: ${formattedStartTime}, End: ${formattedEndTime})`;
+                        }
+                        container.appendChild(slotDiv);
+                    });
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                })
+        })  
+    </script>
+</body>
+
+</html>
+ 
