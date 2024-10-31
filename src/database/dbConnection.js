@@ -7,8 +7,8 @@ const db = async() => {
         
         const localURL = `mongodb://localhost:27017/BookMyDoc`;
         
-        const dbConnection = await mongoose.connect(localURL);   
-        // const dbConnection = await mongoose.connect(connectionURL);   
+        //const dbConnection = await mongoose.connect(localURL);   
+        const dbConnection = await mongoose.connect(connectionURL);   
         
         return dbConnection; 
     } catch (error) {
