@@ -207,3 +207,6 @@ Visit `http://<your-ec2-public-ip>:3000` (or the port you’ve used). For produc
 This setup will have your booking app up and running with Express, Mongoose, and Socket.io on EC2. Let me know if you’d like more details on setting up Nginx or managing additional processes!
 
 http://13.127.242.44:3000/
+
+
+

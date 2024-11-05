@@ -22,7 +22,6 @@ const getAvailableSlots = async(req, res) => {
     
     try {
         const date = req.params.date;
-            
         // fetch booking details which match with selected date
         const avilableSlots = await bookings
         .aggregate([
@@ -31,13 +30,11 @@ const getAvailableSlots = async(req, res) => {
             { $sort: { count: -1 } }, 
         ]);
         // match that slotId with available slots        
-        console.log('return booked slots', avilableSlots);   
+        // console.log('return booked slots', avilableSlots);   
         
         // Convert _id strings to ObjectIds
         const available_slot_id = avilableSlots.map((item)=> new ObjectId(item._id));
-        console.log('av_id',available_slot_id);
-
-        // Aggregation pipeline
+        // console.log('av_id',available_slot_id);        
     // Aggregation pipeline
     const pipeline = [
         {

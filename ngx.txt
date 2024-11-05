@@ -1,0 +1,183 @@
+Last login: Thu Oct 31 22:26:15 on ttys001
+aasifiqbal@Aasifs-MacBook-Air ~ % ls
+Applications		Library			Public
+Backups			Movies			download_001
+Desktop			Music			download_002
+Development		Payment_Gateway_php	package-lock.json
+Documents		Pictures
+Downloads		Postman
+aasifiqbal@Aasifs-MacBook-Air ~ % cd Dow
+cd: no such file or directory: Dow
+aasifiqbal@Aasifs-MacBook-Air ~ % cd Downloads 
+aasifiqbal@Aasifs-MacBook-Air Downloads % chmod 400 BookMyDocMacBook.pem 
+aasifiqbal@Aasifs-MacBook-Air Downloads % ssh -i "BookMyDocMacBook.pem" ubuntu@3.109.213.167      
+Welcome to Ubuntu 24.04.1 LTS (GNU/Linux 6.8.0-1016-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Thu Oct 31 18:01:05 UTC 2024
+
+  System load:  0.0               Processes:             112
+  Usage of /:   31.1% of 6.71GB   Users logged in:       1
+  Memory usage: 30%               IPv4 address for enX0: 172.31.6.102
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+41 updates can be applied immediately.
+22 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+Last login: Thu Oct 31 17:00:56 2024 from 13.233.177.5
+ubuntu@ip-172-31-6-102:~$ ls
+BookMyDoctor.life
+ubuntu@ip-172-31-6-102:~$ cd ..
+ubuntu@ip-172-31-6-102:/home$ ls
+ubuntu
+ubuntu@ip-172-31-6-102:/home$ cd ..
+ubuntu@ip-172-31-6-102:/$ cd ..
+ubuntu@ip-172-31-6-102:/$ ls
+bin                lib                opt                 snap
+bin.usr-is-merged  lib.usr-is-merged  proc                srv
+boot               lib64              root                sys
+dev                lost+found         run                 tmp
+etc                media              sbin                usr
+home               mnt                sbin.usr-is-merged  var
+ubuntu@ip-172-31-6-102:/$ cd etc
+ubuntu@ip-172-31-6-102:/etc$ ls
+ModemManager            modprobe.d
+PackageKit              modules
+X11                     modules-load.d
+acpi                    mtab
+adduser.conf            multipath
+alternatives            multipath.conf
+apparmor                nanorc
+apparmor.d              needrestart
+apport                  netconfig
+apt                     netplan
+bash.bashrc             network
+bash_completion         networkd-dispatcher
+bash_completion.d       networks
+bindresvport.blacklist  newt
+binfmt.d                nftables.conf
+byobu                   nginx
+ca-certificates         nsswitch.conf
+ca-certificates.conf    opt
+chrony                  os-release
+cloud                   overlayroot.conf
+console-setup           overlayroot.local.conf
+credstore               pam.conf
+credstore.encrypted     pam.d
+cron.d                  passwd
+cron.daily              passwd-
+cron.hourly             perl
+cron.monthly            pki
+cron.weekly             plymouth
+cron.yearly             pm
+crontab                 polkit-1
+cryptsetup-initramfs    pollinate
+crypttab                ppp
+dbus-1                  profile
+debconf.conf            profile.d
+debian_version          protocols
+default                 python3
+deluser.conf            python3.12
+depmod.d                rc0.d
+dhcp                    rc1.d
+dhcpcd.conf             rc2.d
+dpkg                    rc3.d
+e2scrub.conf            rc4.d
+ec2_version             rc5.d
+environment             rc6.d
+ethertypes              rcS.d
+fstab                   resolv.conf
+fuse.conf               rmt
+fwupd                   rpc
+gai.conf                rsyslog.conf
+gnutls                  rsyslog.d
+groff                   screenrc
+group                   security
+group-                  selinux
+grub.d                  sensors.d
+gshadow                 sensors3.conf
+gshadow-                services
+gss                     sgml
+hdparm.conf             shadow
+hibagent-config.cfg     shadow-
+hibinit-config.cfg      shells
+host.conf               skel
+hostname                sos
+hosts                   ssh
+hosts.allow             ssl
+hosts.deny              subgid
+init.d                  subgid-
+initramfs-tools         subuid
+inputrc                 subuid-
+iproute2                sudo.conf
+iscsi                   sudo_logsrvd.conf
+issue                   sudoers
+issue.net               sudoers.d
+kernel                  supercat
+landscape               sysctl.conf
+ld.so.cache             sysctl.d
+ld.so.conf              sysstat
+ld.so.conf.d            systemd
+ldap                    terminfo
+legal                   timezone
+libaudit.conf           tmpfiles.d
+libblockdev             ubuntu-advantage
+libibverbs.d            ucf.conf
+libnl-3                 udev
+locale.alias            udisks2
+locale.conf             ufw
+locale.gen              update-manager
+localtime               update-motd.d
+logcheck                update-notifier
+login.defs              usb_modeswitch.conf
+logrotate.conf          usb_modeswitch.d
+logrotate.d             vconsole.conf
+lsb-release             vim
+lvm                     vmware-tools
+machine-id              vtrgb
+magic                   wgetrc
+magic.mime              xattr.conf
+manpath.config          xdg
+mdadm                   xml
+mime.types              zsh_command_not_found
+mke2fs.conf
+ubuntu@ip-172-31-6-102:/etc$ cd ..
+ubuntu@ip-172-31-6-102:/$ ls
+bin                lib                opt                 snap
+bin.usr-is-merged  lib.usr-is-merged  proc                srv
+boot               lib64              root                sys
+dev                lost+found         run                 tmp
+ubuntu@ip-172-31-6-102:/$ sudo vim etc/nginx/sites-available/default 
+ubuntu@ip-172-31-6-102:/$ sudo nano etc/nginx/sites-available/default 
+ubuntu@ip-172-31-6-102:/$ sudo nano etc/nginx/sites-available/default
+ubuntu@ip-172-31-6-102:/$ sudo nano etc/nginx/sites-available/default
+
+  GNU nano 7.2           etc/nginx/sites-available/default *                  
+# to sites-enabled/ to enable it.
+#
+#server {
+#       listen 80;
+#       listen [::]:80;
+#
+#       server_name example.com;
+#
+#       root /var/www/example.com;
+#       index index.html;
+#
+#       location / {
+#               try_files $uri $uri/ =404;
+#       }
+
+^G Help        ^O Write Out   ^W Where Is    ^K Cut         ^T Execute
+^X Exit        ^R Read File   ^\ Replace     ^U Paste       ^J Justify

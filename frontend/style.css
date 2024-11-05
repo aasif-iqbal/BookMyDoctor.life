@@ -143,3 +143,65 @@ button:hover {
     background-color: #d3ffd3;
     /* Light green for available slots */
 }
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    z-index: 1000;
+}
+
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 8px solid white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.time-slot-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Enables wrapping for small screens */
+    gap: 8px; /* Space between items */
+}
+
+.time-slot-container label {
+    margin-right: 10px;
+}
+
+.box {
+    width: 15px;
+    height: 15px;
+}
+
+.red {
+    background-color: #ffcccb;
+}
+
+.green {
+    background-color: #d3ffd3;
+}
+
+@media (max-width: 600px) {
+    .time-slot-container {
+        flex-direction: column; /* Stacks elements vertically */
+        align-items: flex-start; /* Aligns items to the start on small screens */
+    }
+}
