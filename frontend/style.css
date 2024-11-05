@@ -205,3 +205,30 @@ button:hover {
         align-items: flex-start; /* Aligns items to the start on small screens */
     }
 }
+
+.header {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between title and buttons */
+    align-items: center; /* Center vertically */
+    margin-bottom: 20px; /* Space below the header */
+}
+
+.btn {
+    width: 40px; /* Set a fixed width */
+    height: 40px; /* Set a fixed height to match width for square shape */
+    padding: 0; /* Remove padding for a true square shape */
+    background-color: #007BFF; /* Button color */
+    color: white; /* Button text color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Optional: rounded corners */
+    cursor: pointer; /* Pointer on hover */
+    transition: background-color 0.3s; /* Smooth background color change */
+    display: flex; /* Use flexbox for centering content */
+    align-items: center; /* Center text vertically */
+    justify-content: center; /* Center text horizontally */
+    font-size: 1em; /* Set font size for button text */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

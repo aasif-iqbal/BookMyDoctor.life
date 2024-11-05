@@ -29,8 +29,8 @@ const __dirname = path.dirname(__filename);
 // Serve static files (e.g., HTML, CSS, JS)
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-app.get('/test', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend', 'test.html'));
+app.get('/myAppointment', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend', 'myAppointment.html'));
 });
 
 app.set('env', 'production');
