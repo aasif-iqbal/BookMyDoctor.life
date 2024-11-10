@@ -8,14 +8,17 @@ import cors from 'cors';
 import dbConnection from './database/dbConnection.js';
 import bookingRouter  from './routes/bookings.route.js';
 import slotsRouter from './routes/slot.route.js';
+import authRouter from './routes/auth.route.js';
 
 const app = express();
 app.use(express.json());
 // For URL-encoded data (e.g., from forms):
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+
 app.use('/api/v1', bookingRouter);
 app.use('/api/v1', slotsRouter);
+app.use('/api/v1', authRouter);
 
 // Create HTTP server and attach Socket.IO
 const server = http.createServer(app);  
