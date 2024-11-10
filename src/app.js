@@ -33,6 +33,10 @@ app.get('/myAppointment', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend', 'myAppointment.html'));
 });
 
+app.get('/signup', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/login', 'signUp.html'));
+});
+
 app.set('env', 'production');
 
 const PORT = '3000';

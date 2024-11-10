@@ -1,0 +1,1 @@
+// https://stackoverflow.com/questions/37959945/how-to-destroy-jwt-tokens-on-logout
