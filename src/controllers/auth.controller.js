@@ -13,4 +13,8 @@ const signUp = (req, res) => {
     res.send("Sign Up");
 };  
 
-export { signIn, signUp };
+const refreshToken = (req, res) => {
+    res.send("Refresh Token");  
+}
+
+export { signIn, signUp, refreshToken };

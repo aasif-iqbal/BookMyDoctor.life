@@ -17,6 +17,22 @@
 - slotsId
 - status [confirm | cancelled | completed]
 
+# Registration-User
+
+# Department
+- _id
+- department_name
+
+# DoctorInfo
+- _id
+- name
+- department_id
+- image
+- year_of_exp
+- address
+- fee
+
+
 
 # does i need socket.io to update and display avilable slots to end user??
 Using Socket.IO for updating and displaying available slots to end users can be beneficial but is not strictly necessary. Here’s a breakdown of when and why you might want to use Socket.IO versus other methods:
